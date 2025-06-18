@@ -22,8 +22,21 @@
 
       const htmlText = await res.text();
 
-      // Replace the entire document content with the fetched HTML
-      document.documentElement.innerHTML = htmlText;
+      // Create a temporary div to parse the HTML
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = htmlText;
+
+      // Extract and add the head content (styles, scripts, etc.)
+      const headContent = tempDiv.querySelector('head');
+      if (headContent) {
+        document.head.innerHTML += headContent.innerHTML;
+      }
+
+      // Replace the body content
+      const bodyContent = tempDiv.querySelector('body');
+      if (bodyContent) {
+        document.body.innerHTML = bodyContent.innerHTML;
+      }
 
     } catch (error) {
       document.body.innerHTML = 'Error loading URL: ' + error.message;
