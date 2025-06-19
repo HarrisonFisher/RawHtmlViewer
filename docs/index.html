@@ -32,20 +32,8 @@
 
       const htmlText = await res.text();
 
-      // Option 1: Inject the raw HTML inside a div (may break scripts/styles)
-      // document.getElementById('content').innerHTML = htmlText;
-
-      // Option 2: Use an iframe to safely sandbox the fetched HTML
-      const iframe = document.createElement('iframe');
-      iframe.style.width = '100%';
-      iframe.style.height = '100vh';
-      iframe.style.border = 'none';
-      document.getElementById('content').innerHTML = '';
-      document.getElementById('content').appendChild(iframe);
-
-      iframe.contentWindow.document.open();
-      iframe.contentWindow.document.write(htmlText);
-      iframe.contentWindow.document.close();
+      // Inject the raw HTML inside a div (no iframe)
+      document.getElementById('content').innerHTML = htmlText;
 
     } catch (error) {
       document.getElementById('content').textContent = 'Error loading URL: ' + error.message;
